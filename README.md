@@ -1,1 +1,1 @@
-# The-Barbershop-MH-HerokuJawsDB
+# The-Barbershop
