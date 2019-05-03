@@ -25,6 +25,8 @@ module.exports = function (app) {
     var nowDate = moment(cool).format("YYYY/MM/DD");
     var timeNow = moment(cool).format("LT");
 
+
+
     console.log(nowDate + " " + timeNow)
     var momentDateTime = (nowDate + " " + timeNow)
     db.Reservation.findAll({
@@ -34,12 +36,10 @@ module.exports = function (app) {
 
         where: {
           reservation_date: {
-            [Op.gt]: nowDate
+            [Op.gte]: nowDate
           }
 
-
         }
-
 
       })
       .then(function (dbReservation) {
@@ -47,7 +47,9 @@ module.exports = function (app) {
       });
   });
 
-  // Get route for returning posts of a specific category
+
+  
+  // GET route for returning posts of a specific category
   app.get("/api/reservations/barber/:barberId", function (req, res) {
     var cool = new Date();
     var Sequelize = require("sequelize")
@@ -62,7 +64,7 @@ module.exports = function (app) {
         where: {
           barber_name: req.params.barberId,
           reservation_date: {
-            [Op.gt]: nowDate
+            [Op.gte]: nowDate
           }
         }
       })
@@ -71,7 +73,9 @@ module.exports = function (app) {
       });
   });
 
-  // Get route for retrieving a single post
+
+
+  // GET route for retrieving a single post
   app.get("/api/reservations/:id", function (req, res) {
     db.Reservation.findOne({
         where: {
@@ -82,6 +86,8 @@ module.exports = function (app) {
         res.json(dbReservation);
       });
   });
+
+
 
   // POST route for saving a new post
   app.post("/api/reservations", function (req, res) {
@@ -112,6 +118,7 @@ module.exports = function (app) {
   });
 
 
+
   // DELETE route for deleting posts
   app.delete("/api/reservations/:id", function (req, res) {
     db.Reservation.destroy({
@@ -123,6 +130,8 @@ module.exports = function (app) {
         res.json(dbPost);
       });
   });
+
+
 
   // PUT route for updating posts
   app.put("/api/reservations", function (req, res) {
